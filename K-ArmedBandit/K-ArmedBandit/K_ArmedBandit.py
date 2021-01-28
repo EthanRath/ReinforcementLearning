@@ -38,7 +38,7 @@ class EpsGreedy:
 			self.averageReward[self.currentStep-1] = self.totalReward / self.currentStep
 			self.AdjustExpectedReward(action, reward)
 
-	def Plot(self):
+	def PlotProgress(self):
 		plt.plot(self.averageReward, label = "Average: " + str(self.averageReward[-1]))
 		plt.xlabel("Iterations")
 		plt.ylabel("Average Reward")
@@ -48,4 +48,4 @@ class EpsGreedy:
 
 test = EpsGreedy()
 test.Learn()
-test.Plot()
+test.PlotProgress()
