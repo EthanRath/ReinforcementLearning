@@ -3,6 +3,17 @@ import math
 import random
 from matplotlib import pyplot as plt
 
+"""
+This code is based on a problem presented in the book "Reinforcement Learning: An Introduction 2nd ed" by Richard Sutton and Andrew Barto
+In particular it used a problem explored in page 60 of the book called "Gridworld" in which there is a grid of spaces the agent can occupy.
+At each space the agent can go up, down, left, or right. If the agent steps off the grid they are penalized with a reward of -1. Stepping onto
+another valid tile rewards them with 0. However there are 2 key points where, when the agent moves off of them, the agent is rewarded with
+either a reward of 10 or 5 (depending on the space) and is then "teleported" to a predetermined location on the board.
+
+In the first experiment "Random_Test" the agent makes random moves and the Temporal Difference Learning algorithm tries to determine the
+value of each space under this random policy. In the second experiment the agent attempts to learn the optimal policy. Both experiments
+work fairly well and yield similar results to those seen in the book. 
+"""
 class Game:
 	def __init__(self, dims, initializer):
 		#key_positions[0] is a list of np arrays containing indices of locations that send you to another location

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ReinforcementLearningSandbox", "K-ArmedBandit\ReinforcementLearningSandbox.pyproj", "{0523D4D7-AFBB-478D-A4D3-96F043C9615D}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ReinforcementLearningSandbox", "Sandbox_Experiments\ReinforcementLearningSandbox.pyproj", "{0523D4D7-AFBB-478D-A4D3-96F043C9615D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
