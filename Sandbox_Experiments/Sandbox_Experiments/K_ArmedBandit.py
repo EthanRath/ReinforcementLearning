@@ -13,10 +13,26 @@ class Bandit:
 	def PullArm(self, arm):
 		return np.random.normal(self.arms[arm], self.armStd)
 
+#creates bandit where the mean of each arm changes according to func
+class ChangingBandit:
+	def __init__(self, func, numArms= 10, mean = 0, std = 1, armStd = 1):
+		self.arms = np.random.normal(mean, std, (numArms))
+		self.pulls = np.zeros(numArms)
+		self.armStd = armStd
+		self.func = func
+	#arm -> index of which arm has been chosen to pull
+	def PullArm(self, arm):
+		self.pulls[arm] += 1
+		return np.random.normal(self.arms[arm] + self.func(self.pulls[arm]), self.armStd)
+
+
 class EpsGreedy:
 	#eps -> probability the algorithm chooses to explore a random arm rather than choosing the currently known best arm
-	def __init__(self, numArms = 10, mean = 0, std = 1, armStd = 1, eps = .1, learnRate = -1):
-		self.bandit = Bandit(numArms, mean, std, armStd) #the bandit
+	def __init__(self, numArms = 10, mean = 0, std = 1, armStd = 1, eps = .1, learnRate = -1, func = None):
+		if func == None:
+			self.bandit = Bandit(numArms, mean, std, armStd) #the bandit
+		else:
+			self.bandit = ChangingBandit(func, numArms, mean, std, armStd)
 		self.averages = np.zeros(numArms) #array containing currently approximated expected reward from each arm
 		self.actionCount = np.zeros(numArms) #keeps track of how many times each arm has been chosen
 		self.currentStep = 0 #current iteration
@@ -65,15 +81,15 @@ class EpsGreedy:
 		colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 
 			'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive', 'tab:cyan']
 		for i in range(len(self.averages)):
-			plt.plot(temp[i], label = "Estimated Expected Value of Arm " + str(i), color = colors[i])
-			plt.plot(self.bandit.arms[i], label = "Actual Average of Arm" + str(i), color = colors[i])
+			plt.plot(temp[i], label = "Estimated " + str(i), color = colors[i % len(colors)])
+			plt.plot(self.bandit.arms[i] + np.zeros(len(temp[i])), label = "Actual " + str(i), color = colors[i % len(colors)])
 		plt.xlabel("Iterations")
 		plt.ylabel("Average Reward")
 		plt.title("Model Attempting to Approximate Arm Rewards, Learn Rate: " + str(self.learnRate))
 		plt.legend()
 		plt.show()
 
-test = EpsGreedy()
+test = EpsGreedy(learnRate = .1, func = lambda x: x/100)
 test.Learn()
 #test.PlotProgress()
 test.PlotExpectedReward()
